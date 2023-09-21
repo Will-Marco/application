@@ -1,9 +1,10 @@
 import { Route, Routes } from "react-router-dom";
-import { Main, Login, Register } from "./components";
+import { Main, Login, Register, Navbar } from "./components";
 
 function App() {
   return (
-    <div className="App">
+    <div>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />

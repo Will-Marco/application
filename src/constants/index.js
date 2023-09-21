@@ -1,0 +1,1 @@
+export const logo = 'https://www.freeiconspng.com/uploads/rainbow-logo-design-transparent-0.png'
