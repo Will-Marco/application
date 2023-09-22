@@ -11,7 +11,7 @@ const Login = () => {
       <main className="form-signin w-25 m-auto">
         <form>
           <img className="mb-4" src={graduationCapIcon} alt="" width="72" />
-          <h1 class="h3 mb-3 fw-normal">Please login</h1>
+          <h1 className="h3 mb-3 fw-normal">Please login</h1>
 
           <Input
             label={"Email address"}
