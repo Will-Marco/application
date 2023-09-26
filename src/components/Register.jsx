@@ -2,7 +2,12 @@ import { useState } from "react";
 import { graduationCapIcon } from "../constants";
 import { Input } from "../ui";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUserStart } from "../slice/auth";
+import {
+  registerUserFailure,
+  registerUserStart,
+  registerUserSuccess,
+} from "../slice/auth";
+import AuthService from "../service/auth";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -11,9 +16,17 @@ const Register = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.auth);
 
-  const registerHandler = (e) => {
+  const registerHandler = async (e) => {
     e.preventDefault();
     dispatch(registerUserStart());
+    const user = { username: name, email, password };
+    try {
+      const response = await AuthService.userRegister(user);
+      console.log(response);
+      dispatch(registerUserSuccess());
+    } catch (error) {
+      dispatch(registerUserFailure());
+    }
   };
 
   return (
@@ -21,7 +34,7 @@ const Register = () => {
       <main className="form-signin w-25 m-auto">
         <form>
           <img className="mb-4" src={graduationCapIcon} alt="" width="72" />
-          <h1 class="h3 mb-3 fw-normal">Please register</h1>
+          <h1 className="h3 mb-3 fw-normal">Please register</h1>
 
           <Input label={"Username"} state={name} setState={setName} />
           <Input
