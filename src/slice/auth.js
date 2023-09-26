@@ -14,14 +14,15 @@ export const authSlice = createSlice({
     signUserStart: (state) => {
       state.isLoading = true;
     },
-    signUserSuccess: (state) => {
+    signUserSuccess: (state, action) => {
       state.loggedIn = true;
       state.isLoading = false;
       state.error = null;
+      state.user = action.payload
     },
-    signUserFailure: (state) => {
+    signUserFailure: (state, action) => {
       state.isLoading = false;
-      state.error = "Failed";
+      state.error = action.payload;
     },
   },
 });
