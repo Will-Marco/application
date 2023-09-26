@@ -1,8 +1,13 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { graduationCapIcon } from "../constants";
 import { Input } from "../ui";
-import { useSelector, useDispatch } from "react-redux";
-import { loginUserStart } from "../slice/auth";
+import {
+  loginUserFailure,
+  loginUserStart,
+  loginUserSuccess,
+} from "../slice/auth";
+import AuthService from "../service/auth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,9 +15,17 @@ const Login = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.auth);
 
-  const loginHandler = (e) => {
+  const loginHandler = async (e) => {
     e.preventDefault();
     dispatch(loginUserStart());
+    const user = { email, password };
+    try {
+      const response = await AuthService.userLogin(user);
+      console.log(response);
+      dispatch(loginUserSuccess());
+    } catch (error) {
+      dispatch(loginUserFailure());
+    }
   };
 
   return (
@@ -41,7 +54,7 @@ const Login = () => {
             disabled={isLoading}
             onClick={loginHandler}
           >
-            {isLoading ? 'loading...' : 'Login'}
+            {isLoading ? "loading..." : "Login"}
           </button>
         </form>
       </main>

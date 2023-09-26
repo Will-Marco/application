@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { graduationCapIcon } from "../constants";
 import { Input } from "../ui";
-import { useDispatch, useSelector } from "react-redux";
 import {
   registerUserFailure,
   registerUserStart,

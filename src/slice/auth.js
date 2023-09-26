@@ -15,8 +15,15 @@ export const authSlice = createSlice({
     loginUserStart: (state) => {
       state.isLoading = true;
     },
-    loginUserSuccess: (state) => {},
-    loginUserFailure: (state) => {},
+    loginUserSuccess: (state) => {
+      state.loggedIn = true;
+      state.isLoading = false;
+      state.error = null;
+    },
+    loginUserFailure: (state) => {
+      state.isLoading = false;
+      state.error = "Login failed";
+    },
     // REGISTER
     registerUserStart: (state) => {
       state.isLoading = true;
@@ -24,16 +31,19 @@ export const authSlice = createSlice({
     registerUserSuccess: (state) => {
       state.loggedIn = true;
       state.isLoading = false;
+      state.error = null;
     },
     registerUserFailure: (state) => {
       state.isLoading = false;
-      state.error = "Something went wrong";
+      state.error = "Register failed";
     },
   },
 });
 
 export const {
   loginUserStart,
+  loginUserSuccess,
+  loginUserFailure,
   registerUserStart,
   registerUserSuccess,
   registerUserFailure,
