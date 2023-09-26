@@ -2,11 +2,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { graduationCapIcon } from "../constants";
 import { Input } from "../ui";
-import {
-  loginUserFailure,
-  loginUserStart,
-  loginUserSuccess,
-} from "../slice/auth";
+import { signUserFailure, signUserStart, signUserSuccess } from "../slice/auth";
 import AuthService from "../service/auth";
 
 const Login = () => {
@@ -17,14 +13,14 @@ const Login = () => {
 
   const loginHandler = async (e) => {
     e.preventDefault();
-    dispatch(loginUserStart());
+    dispatch(signUserStart());
     const user = { email, password };
     try {
       const response = await AuthService.userLogin(user);
       console.log(response);
-      dispatch(loginUserSuccess());
+      dispatch(signUserSuccess());
     } catch (error) {
-      dispatch(loginUserFailure());
+      dispatch(signUserFailure());
     }
   };
 
