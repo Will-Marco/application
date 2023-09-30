@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ValidationError } from "./";
 import { graduationCapIcon } from "../constants";
 import { Input } from "../ui";
 import { signUserFailure, signUserStart, signUserSuccess } from "../slice/auth";
@@ -30,7 +31,7 @@ const Register = () => {
         <form>
           <img className="mb-4" src={graduationCapIcon} alt="" width="72" />
           <h1 className="h3 mb-3 fw-normal">Please register</h1>
-
+          <ValidationError />
           <Input label={"Username"} state={name} setState={setName} />
           <Input
             label={"Email address"}
