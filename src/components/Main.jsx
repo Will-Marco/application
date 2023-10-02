@@ -1,11 +1,12 @@
 import { useSelector } from "react-redux";
-
+import { Loader } from "../ui";
 const Main = () => {
-  const { articles } = useSelector((state) => state.articles);
+  const { articles, isLoading } = useSelector((state) => state.articles);
 
   return (
     <div className="album py-5">
       <div className="container">
+        {isLoading && <Loader />}
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           {articles.map((item) => (
             <div className="col" key={item.id}>
@@ -28,31 +29,31 @@ const Main = () => {
                   <p className="card-text overflow-hidden">
                     {item.description}
                   </p>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div className="btn-group">
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-outline-success"
-                      >
-                        View
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-outline-secondary"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-outline-danger"
-                      >
-                        Edit
-                      </button>
-                    </div>
-                    <small className="text-body-secondary fw-bold text-capitalize">
-                      {item.author.username}
-                    </small>
+                </div>
+                <div className="card-footer d-flex justify-content-between align-items-center">
+                  <div className="btn-group">
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-outline-success"
+                    >
+                      View
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-outline-secondary"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-outline-danger"
+                    >
+                      Edit
+                    </button>
                   </div>
+                  <small className="text-body-secondary fw-bold text-capitalize">
+                    {item.author.username}
+                  </small>
                 </div>
               </div>
             </div>
