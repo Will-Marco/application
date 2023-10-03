@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Main, Login, Register, Navbar } from "./components";
+import { Main, Login, Register, Navbar, ArticleDetail } from "./components";
 import AuthService from "./service/auth";
 import { signUserSuccess } from "./slice/auth";
 import { getItem } from "./helpers/persistence-storange";
@@ -26,7 +26,7 @@ function App() {
       const response = await ArticleService.getArticles();
       dispatch(getArticlesSuccess(response.articles));
     } catch (error) {
-      console.log(error); 
+      console.log(error);
     }
   };
 
@@ -39,11 +39,14 @@ function App() {
   return (
     <div>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/article/:slug" element={<ArticleDetail />} />
+        </Routes>
+      </div>
     </div>
   );
 }
