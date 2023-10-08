@@ -6,3 +6,4 @@ export { default as ValidationError } from "./Validation-error";
 export { default as ArticleDetail } from "./Article-detail";
 export { default as CreateArticle } from "./Create-article";
 export { default as EditArticle } from "./Edit-article";
+export { default as ArticleCard } from "./Article-card";
