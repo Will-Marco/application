@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getArticlesStart, getArticlesSuccess } from "../slice/article";
+import {
+  getArticlesFailure,
+  getArticlesStart,
+  getArticlesSuccess,
+} from "../slice/article";
 import ArticleService from "../service/article";
 import { Loader } from "../ui";
 
@@ -17,7 +21,7 @@ const Main = () => {
       const response = await ArticleService.getArticles();
       dispatch(getArticlesSuccess(response.articles));
     } catch (error) {
-      console.log(error);
+      dispatch(getArticlesFailure(error));
     }
   };
 
@@ -72,6 +76,7 @@ const Main = () => {
                       <button
                         type="button"
                         className="btn btn-sm btn-outline-secondary"
+                        onClick={() => navigate(`/edit-article/${item.slug}`)}
                       >
                         Edit
                       </button>
