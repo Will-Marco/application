@@ -7,19 +7,30 @@ import { Loader } from "../ui";
 
 const Main = () => {
   const { articles, isLoading } = useSelector((state) => state.articles);
+  const { loggedIn, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const getArticles = async () => {
+    dispatch(getArticlesStart());
+    try {
+      const response = await ArticleService.getArticles();
+      dispatch(getArticlesSuccess(response.articles));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteArticle = async (slug) => {
+    try {
+      await ArticleService.deleteArticle(slug);
+      getArticles();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    const getArticles = async () => {
-      dispatch(getArticlesStart());
-      try {
-        const response = await ArticleService.getArticles();
-        dispatch(getArticlesSuccess(response.articles));
-      } catch (error) {
-        console.log(error);
-      }
-    };
     getArticles();
   }, []);
 
@@ -56,18 +67,23 @@ const Main = () => {
                   >
                     View
                   </button>
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-outline-secondary"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-outline-danger"
-                  >
-                    Edit
-                  </button>
+                  {loggedIn && user.username === item.author.username && (
+                    <>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-outline-secondary"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-outline-danger"
+                        onClick={() => deleteArticle(item.slug)}
+                      >
+                        Delete
+                      </button>
+                    </>
+                  )}
                 </div>
                 <small className="text-body-secondary fw-bold text-capitalize">
                   {item.author.username}
